@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Articuler.ai — Build relationships that take you further</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- DEV: self-host these if the page cannot call Google Fonts. Display is DM Serif Display; UI is Inter. -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!--
+    Implementation note
+    -------------------
+    One landing page, taken from the Figma frame "Landing_Hifi" (node 2364:60919).
+    Layout, type, and section order follow that frame. Colors live only in css/styles.css
+    under :root so the palette can be swapped without hunting through components.
+
+    Structure
+    1. Hero — nav, headline, photo, partner logo row
+    2. Proof — Figma 2414:18740 (without) / 2414:18751 (compare + labels)
+    3. Benefits — "Benefit with Agentic Networking". Tabs auto-rotate; click a tab to select.
+       See initBenefitTabs() in js/main.js.
+    4. Audiences — scroll-driven: left copy stays put; photos scroll up; three rows map to
+       Founder / Professional / Event. See initScrollAudiences() in js/main.js.
+    Footer sits after the four sections. It is in the Figma frame and is not a fifth story section.
+
+    Only the first benefits tab is specified in the Figma frame. Tabs 2–4 reuse the
+    same card and carry placeholder copy marked PLACEHOLDER below.
+  -->
+
+  <header class="hero">
+    <div class="hero__media" aria-hidden="true">
+      <!-- DEV: replace assets/hero-background.jpg to swap the full hero plate (glow + photo). -->
+      <img class="hero__background" src="assets/hero-background.jpg" alt="">
+    </div>
+
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__logo" href="#top">
+        <img src="assets/logo.svg" width="133" height="28" alt="articuler.ai">
+      </a>
+      <ul class="nav__links">
+        <li><a href="#audiences">Founder</a></li>
+        <li><a href="#audiences">Event Host</a></li>
+        <li><a href="#audiences">Professional</a></li>
+      </ul>
+      <a class="nav__signin" href="#signin">Sign In</a>
+    </nav>
+
+    <div class="hero__copy">
+      <h1>Build relationships that take you further</h1>
+      <p>Articuler matches you with the people who matter most to your ambitions, and unlocks opportunities you never thought possible.</p>
+      <a class="button button--pill" href="#benefits">Start Connecting →</a>
+    </div>
+
+    <div class="logo-row">
+      <!-- DEV: replace logo files if brand locks change. Second half duplicates the first for the marquee loop. -->
+      <ul class="logo-row__track" aria-label="Partner institutions">
+        <li><img src="assets/logo-usc.png" alt="USC"></li>
+        <li><img src="assets/logo-partner-2.png" alt="The University of Chicago"></li>
+        <li><img src="assets/logo-partner-3.png" alt="Harvard University"></li>
+        <li><img src="assets/logo-partner-4.png" alt="Northwestern University"></li>
+        <li><img src="assets/logo-partner-5.png" alt="Berkeley"></li>
+        <li><img src="assets/logo-partner-6.png" alt="Meta"></li>
+        <li aria-hidden="true"><img src="assets/logo-usc.png" alt=""></li>
+        <li aria-hidden="true"><img src="assets/logo-partner-2.png" alt=""></li>
+        <li aria-hidden="true"><img src="assets/logo-partner-3.png" alt=""></li>
+        <li aria-hidden="true"><img src="assets/logo-partner-4.png" alt=""></li>
+        <li aria-hidden="true"><img src="assets/logo-partner-5.png" alt=""></li>
+        <li aria-hidden="true"><img src="assets/logo-partner-6.png" alt=""></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="proof" id="proof" aria-labelledby="proof-title">
+      <div class="proof__intro" data-reveal>
+        <h2 id="proof-title">
+          <span class="proof__title-line">Who Says Networking</span>
+          <span class="proof__title-line">Can't deliver result without exhaustion</span>
+        </h2>
+        <p>15% people reply after first qualified match within 980M professionals</p>
+      </div>
+
+      <div class="proof__stage" data-reveal>
+        <div
+          class="proof__compare"
+          data-proof-compare
+          data-with-src="assets/proof-compare-with.png"
+          data-without-src="assets/proof-compare-without.png"
+          style="--compare-pct: 50"
+        >
+          <!-- "without" is baked into the left frame (18740); "with" label per 18751 -->
+          <div class="proof__compare-labels" aria-hidden="true">
+            <span class="proof__compare-label proof__compare-label--with">with</span>
+          </div>
+          <div class="proof__compare-media">
+            <div class="proof__compare-layer proof__compare-layer--with">
+              <div class="proof__compare-scene">
+                <img src="assets/proof-with-scene.png" width="1536" height="758" alt="">
+              </div>
+              <article class="proof__match-card">
+                <h3 class="proof__match-card-title">VCs Who Wrote Checks for Early-Stage Startups in the Last 2 Months</h3>
+                <ul class="proof__match-stack">
+                  <li class="proof__match-row proof__match-row--back">
+                    <img src="assets/match-avatar-alex.png" width="30" height="30" alt="">
+                    <span class="proof__match-name">Alex Davidov</span>
+                    <span class="proof__match-tag">Abstract</span>
+                  </li>
+                  <li class="proof__match-row proof__match-row--mid">
+                    <img src="assets/match-avatar-michael.png" width="30" height="30" alt="">
+                    <span class="proof__match-name">Michael Reed</span>
+                    <span class="proof__match-tag">A16Z</span>
+                  </li>
+                  <li class="proof__match-row proof__match-row--front">
+                    <img src="assets/match-avatar-gary.png" width="30" height="30" alt="">
+                    <span class="proof__match-name">Gary Tan</span>
+                    <span class="proof__match-tag">Y Combinator</span>
+                    <img class="proof__match-check" src="assets/match-check.svg" width="24" height="24" alt="">
+                  </li>
+                </ul>
+              </article>
+            </div>
+            <div class="proof__compare-clip">
+              <div class="proof__compare-layer proof__compare-layer--without">
+                <span class="proof__compare-label proof__compare-label--without">without</span>
+                <div class="proof__without-mail">
+                  <img src="assets/proof-without-mail.png" width="1536" height="1024" alt="">
+                </div>
+                <img
+                  class="proof__without-person"
+                  src="assets/proof-without-person.png"
+                  width="1457"
+                  height="720"
+                  alt=""
+                >
+              </div>
+            </div>
+          </div>
+          <div class="proof__compare-divider" aria-hidden="true"></div>
+          <button
+            type="button"
+            class="proof__compare-handle"
+            role="slider"
+            aria-label="Drag to compare without and with Articuler"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="50"
+          >
+            <img
+              class="proof__compare-handle-mark"
+              src="assets/mark.svg"
+              width="46"
+              height="46"
+              alt=""
+            >
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits" data-benefit-tabs aria-labelledby="benefits-title">
+      <div class="benefits__sticky">
+        <div class="benefits__inner">
+          <h2 id="benefits-title" data-reveal>Benefit with Agentic Networking</h2>
+
+          <div class="benefit-tabs" role="tablist" aria-label="Agentic networking benefits">
+            <button class="benefit-tab is-active" type="button" role="tab" id="tab-intent" data-tab="0" aria-selected="true" aria-controls="panel-intent">
+              <span class="benefit-tab__icon"><img src="assets/icon-focus.svg" width="24" height="24" alt=""></span>
+              Start with intent
+            </button>
+            <button class="benefit-tab" type="button" role="tab" id="tab-signals" data-tab="1" aria-selected="false" aria-controls="panel-signals" tabindex="-1">
+              <span class="benefit-tab__icon"><img src="assets/icon-signals.svg" width="16" height="16" alt=""></span>
+              Read the signals
+            </button>
+            <button class="benefit-tab" type="button" role="tab" id="tab-reason" data-tab="2" aria-selected="false" aria-controls="panel-reason" tabindex="-1">
+              <span class="benefit-tab__icon"><img src="assets/icon-clock.svg" width="16" height="16" alt=""></span>
+              See the reason
+            </button>
+            <button class="benefit-tab" type="button" role="tab" id="tab-decode" data-tab="3" aria-selected="false" aria-controls="panel-decode" tabindex="-1">
+              <span class="benefit-tab__icon"><img src="assets/icon-users.svg" width="16" height="16" alt=""></span>
+              Decode anyone
+            </button>
+          </div>
+
+          <div class="intent-stack">
+            <article class="intent is-active" id="panel-intent" role="tabpanel" aria-labelledby="tab-intent" data-panel="0">
+              <div class="intent__stage">
+                <div class="intent__composer">
+                <div class="intent__prompt">
+                  <p>I want to meet a technical co-founder working on AI workflows.</p>
+                </div>
+                <div class="intent__actions">
+                  <span class="chip">Technical co-founder <img src="assets/icon-close.svg" width="16" height="16" alt=""></span>
+                  <span class="chip">AI workflows <img src="assets/icon-close.svg" width="16" height="16" alt=""></span>
+                  <span class="chip chip--ghost"><img src="assets/icon-plus.svg" width="21" height="21" alt=""> Add Detail</span>
+                  <span class="intent__send" aria-hidden="true"><img src="assets/icon-arrow-up.svg" width="34" height="34" alt=""></span>
+                </div>
+              </div>
+              </div>
+              <div class="intent__caption">
+                <p>Say what you want to accomplish, not just who to search for.</p>
+              </div>
+            </article>
+
+            <!-- PLACEHOLDER: Figma only designs the first tab. Replace copy and chips for the states below. -->
+            <article class="intent" id="panel-signals" role="tabpanel" aria-labelledby="tab-signals" data-panel="1" aria-hidden="true">
+              <div class="intent__stage">
+                <div class="intent__composer">
+                <div class="intent__prompt">
+                  <p>Show me who is already warm to a conversation about AI workflows.</p>
+                </div>
+                <div class="intent__actions">
+                  <span class="chip">Warm reply <img src="assets/icon-close.svg" width="16" height="16" alt=""></span>
+                  <span class="chip">Shared context <img src="assets/icon-close.svg" width="16" height="16" alt=""></span>
+                  <span class="chip chip--ghost"><img src="assets/icon-plus.svg" width="21" height="21" alt=""> Add Detail</span>
+                  <span class="intent__send" aria-hidden="true"><img src="assets/icon-arrow-up.svg" width="34" height="34" alt=""></span>
+                </div>
+              </div>
+              </div>
+              <div class="intent__caption">
+                <p>See who is likely to respond before you spend the outreach.</p>
+              </div>
+            </article>
+
+            <article class="intent" id="panel-reason" role="tabpanel" aria-labelledby="tab-reason" data-panel="2" aria-hidden="true">
+              <div class="intent__stage">
+                <div class="intent__composer">
+                <div class="intent__prompt">
+                  <p>Why does this match fit the round I am raising?</p>
+                </div>
+                <div class="intent__actions">
+                  <span class="chip">Recent checks <img src="assets/icon-close.svg" width="16" height="16" alt=""></span>
+                  <span class="chip">Stage fit <img src="assets/icon-close.svg" width="16" height="16" alt=""></span>
+                  <span class="chip chip--ghost"><img src="assets/icon-plus.svg" width="21" height="21" alt=""> Add Detail</span>
+                  <span class="intent__send" aria-hidden="true"><img src="assets/icon-arrow-up.svg" width="34" height="34" alt=""></span>
+                </div>
+              </div>
+              </div>
+              <div class="intent__caption">
+                <p>Every introduction comes with the reason it is worth making.</p>
+              </div>
+            </article>
+
+            <article class="intent" id="panel-decode" role="tabpanel" aria-labelledby="tab-decode" data-panel="3" aria-hidden="true">
+              <div class="intent__stage">
+                <div class="intent__composer">
+                <div class="intent__prompt">
+                  <p>What should I know before I meet this person?</p>
+                </div>
+                <div class="intent__actions">
+                  <span class="chip">Background <img src="assets/icon-close.svg" width="16" height="16" alt=""></span>
+                  <span class="chip">How to open <img src="assets/icon-close.svg" width="16" height="16" alt=""></span>
+                  <span class="chip chip--ghost"><img src="assets/icon-plus.svg" width="21" height="21" alt=""> Add Detail</span>
+                  <span class="intent__send" aria-hidden="true"><img src="assets/icon-arrow-up.svg" width="34" height="34" alt=""></span>
+                </div>
+              </div>
+              </div>
+              <div class="intent__caption">
+                <p>Get a readable picture of the person before the first conversation.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="audiences" id="audiences" data-scroll-audiences aria-labelledby="audiences-title">
+      <div class="audiences__sticky">
+        <div class="audiences__layout">
+          <div class="audiences__copy" data-reveal>
+            <h2 id="audiences-title">Everything you need to connect, talk and get result.</h2>
+            <!-- DEV: this subtitle is copied from the Figma frame as-is. -->
+            <p>From drafting to compliance, every step of your legal process is powered by precision, collaboration, and security.</p>
+
+            <div class="audience-list" role="tablist" aria-label="Audiences">
+              <article class="audience" data-audience="0" role="presentation">
+                <h3>
+                  <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-0" id="audience-tab-0" tabindex="-1">
+                    Founder
+                  </button>
+                </h3>
+                <p class="audience__panel" id="audience-panel-0" role="tabpanel" aria-labelledby="audience-tab-0" aria-hidden="true">It helps you find the right professional connection, understand why the match matters, and start with a warmer first move.</p>
+              </article>
+              <article class="audience" data-audience="1" role="presentation">
+                <h3>
+                  <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-1" id="audience-tab-1" tabindex="-1">
+                    Professional
+                  </button>
+                </h3>
+                <p class="audience__panel" id="audience-panel-1" role="tabpanel" aria-labelledby="audience-tab-1" aria-hidden="true">Build warm paths to founders and peers without cold outreach fatigue.</p>
+              </article>
+              <article class="audience" data-audience="2" role="presentation">
+                <h3>
+                  <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-2" id="audience-tab-2" tabindex="-1">
+                    Event
+                  </button>
+                </h3>
+                <p class="audience__panel" id="audience-panel-2" role="tabpanel" aria-labelledby="audience-tab-2" aria-hidden="true">Turn gatherings into qualified introductions before the room clears.</p>
+              </article>
+            </div>
+            <a class="button button--solid" href="#benefits">Learn More</a>
+          </div>
+
+          <div class="audiences__media">
+            <div class="audiences__photos-viewport" data-audiences-viewport>
+              <div class="audiences__photos" data-audiences-photos>
+                <!-- DEV: swap these three photos if the audience stories change. Order matches data-audience 0–2. -->
+                <img data-audience-photo="0" src="assets/photo-portrait.png" alt="Portrait of a person in conversation">
+                <img data-audience-photo="1" src="assets/photo-networking.png" alt="Two people talking at an evening gathering">
+                <img data-audience-photo="2" src="assets/photo-crowd.png" alt="A group posing together at an event">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__top">
+      <div class="site-footer__cta">
+        <p>Match with people who matters to you.</p>
+        <div class="site-footer__actions">
+          <a class="button button--accent" href="#benefits">Start Matching</a>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <div>
+          <h2>Founder</h2>
+          <a href="#audiences">Match</a>
+          <a href="#audiences">Paths</a>
+          <a href="#audiences">Proof</a>
+          <a href="#audiences">Blog</a>
+        </div>
+        <div>
+          <h2>Professional</h2>
+          <a href="#audiences">Match</a>
+          <a href="#audiences">Paths</a>
+          <a href="#audiences">Proof</a>
+          <a href="#audiences">Blog</a>
+        </div>
+        <div>
+          <h2>Event</h2>
+          <a href="#audiences">Match</a>
+          <a href="#audiences">Paths</a>
+          <a href="#audiences">Proof</a>
+          <a href="#audiences">Blog</a>
+        </div>
+        <div>
+          <h2>Blog</h2>
+          <a href="#audiences">Match</a>
+          <a href="#audiences">Paths</a>
+          <a href="#audiences">Proof</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="site-footer__brand">
+      <img src="assets/wordmark.svg" width="272" height="57" alt="articuler.ai">
+      <div class="socials">
+        <!-- DEV: the Figma frame repeats the LinkedIn icon. Point each href at the real profile. -->
+        <a href="https://www.x.com" aria-label="Articuler on X"><img src="assets/social-x.svg" width="40" height="40" alt=""></a>
+        <a href="https://www.linkedin.com" aria-label="Articuler on LinkedIn"><img src="assets/social-in.svg" width="40" height="40" alt=""></a>
+        <a href="https://www.linkedin.com" aria-label="Articuler on LinkedIn"><img src="assets/social-in.svg" width="40" height="40" alt=""></a>
+        <a href="https://www.linkedin.com" aria-label="Articuler on LinkedIn"><img src="assets/social-in.svg" width="40" height="40" alt=""></a>
+      </div>
+    </div>
+
+    <div class="site-footer__legal">
+      <ul>
+        <li><a href="#terms">Terms</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#disclosures">Disclosures</a></li>
+        <li><a href="#cookies">Cookie Settings</a></li>
+        <li>© Articuler AI, 2026 All rights reserved</li>
+      </ul>
+      <p>AI networking for better professional relationships.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

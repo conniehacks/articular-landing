@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Articuler.ai — Build relationships that take you further</title>
+  <link rel="preload" as="image" href="assets/logo-usc.png" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/logo-partner-2.png" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/logo-partner-3.png" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/logo-partner-4.png" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/logo-partner-5.png" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/logo-partner-6.png" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- DEV: self-host these if the page cannot call Google Fonts. Display is DM Serif Display; UI is Inter. -->
@@ -56,21 +62,37 @@
     </div>
 
     <div class="logo-row">
-      <!-- DEV: replace logo files if brand locks change. Second half duplicates the first for the marquee loop. -->
-      <ul class="logo-row__track" aria-label="Partner institutions">
-        <li><img src="assets/logo-usc.png" alt="USC"></li>
-        <li><img src="assets/logo-partner-2.png" alt="The University of Chicago"></li>
-        <li><img src="assets/logo-partner-3.png" alt="Harvard University"></li>
-        <li><img src="assets/logo-partner-4.png" alt="Northwestern University"></li>
-        <li><img src="assets/logo-partner-5.png" alt="Berkeley"></li>
-        <li><img src="assets/logo-partner-6.png" alt="Meta"></li>
-        <li aria-hidden="true"><img src="assets/logo-usc.png" alt=""></li>
-        <li aria-hidden="true"><img src="assets/logo-partner-2.png" alt=""></li>
-        <li aria-hidden="true"><img src="assets/logo-partner-3.png" alt=""></li>
-        <li aria-hidden="true"><img src="assets/logo-partner-4.png" alt=""></li>
-        <li aria-hidden="true"><img src="assets/logo-partner-5.png" alt=""></li>
-        <li aria-hidden="true"><img src="assets/logo-partner-6.png" alt=""></li>
-      </ul>
+      <!-- DEV: replace logo files if brand locks change. Each set is two copies of the six logos so it is wider than the 1280px row. The second set repeats the first so the marquee loop has no gap. -->
+      <div class="logo-row__track">
+        <ul class="logo-row__set" aria-label="Partner institutions">
+          <li><img src="assets/logo-usc.png" alt="USC" fetchpriority="high" decoding="async"></li>
+          <li><img src="assets/logo-partner-2.png" alt="The University of Chicago" fetchpriority="high" decoding="async"></li>
+          <li><img src="assets/logo-partner-3.png" alt="Harvard University" fetchpriority="high" decoding="async"></li>
+          <li><img src="assets/logo-partner-4.png" alt="Northwestern University" fetchpriority="high" decoding="async"></li>
+          <li><img src="assets/logo-partner-5.png" alt="Berkeley" fetchpriority="high" decoding="async"></li>
+          <li><img src="assets/logo-partner-6.png" alt="Meta" fetchpriority="high" decoding="async"></li>
+          <li aria-hidden="true"><img src="assets/logo-usc.png" alt=""></li>
+          <li aria-hidden="true"><img src="assets/logo-partner-2.png" alt=""></li>
+          <li aria-hidden="true"><img src="assets/logo-partner-3.png" alt=""></li>
+          <li aria-hidden="true"><img src="assets/logo-partner-4.png" alt=""></li>
+          <li aria-hidden="true"><img src="assets/logo-partner-5.png" alt=""></li>
+          <li aria-hidden="true"><img src="assets/logo-partner-6.png" alt=""></li>
+        </ul>
+        <ul class="logo-row__set" aria-hidden="true">
+          <li><img src="assets/logo-usc.png" alt=""></li>
+          <li><img src="assets/logo-partner-2.png" alt=""></li>
+          <li><img src="assets/logo-partner-3.png" alt=""></li>
+          <li><img src="assets/logo-partner-4.png" alt=""></li>
+          <li><img src="assets/logo-partner-5.png" alt=""></li>
+          <li><img src="assets/logo-partner-6.png" alt=""></li>
+          <li><img src="assets/logo-usc.png" alt=""></li>
+          <li><img src="assets/logo-partner-2.png" alt=""></li>
+          <li><img src="assets/logo-partner-3.png" alt=""></li>
+          <li><img src="assets/logo-partner-4.png" alt=""></li>
+          <li><img src="assets/logo-partner-5.png" alt=""></li>
+          <li><img src="assets/logo-partner-6.png" alt=""></li>
+        </ul>
+      </div>
     </div>
   </header>
 
@@ -168,7 +190,7 @@
 
           <div class="benefit-tabs" role="tablist" aria-label="Agentic networking benefits">
             <button class="benefit-tab is-active" type="button" role="tab" id="tab-intent" data-tab="0" aria-selected="true" aria-controls="panel-intent">
-              <span class="benefit-tab__icon"><img src="assets/icon-focus.svg" width="24" height="24" alt=""></span>
+              <span class="benefit-tab__icon"><img src="assets/icon-focus.png" width="24" height="24" alt=""></span>
               Start with intent
             </button>
             <button class="benefit-tab" type="button" role="tab" id="tab-signals" data-tab="1" aria-selected="false" aria-controls="panel-signals" tabindex="-1">

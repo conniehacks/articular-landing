@@ -51,6 +51,7 @@ function initBenefitTabs() {
   var count = tabs.length;
   var current = -1;
   var timer = null;
+  var inView = false;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function autoplayMs() {
@@ -94,9 +95,10 @@ function initBenefitTabs() {
     section.classList.remove("is-advancing");
   }
 
-  function startAutoplay() {
+  function startAutoplay(force) {
     stopAutoplay();
-    if (reduceMotion.matches || count <= 1) return;
+    if (!inView || reduceMotion.matches || count <= 1) return;
+    if (!force && section.matches(":hover")) return;
     playBar();
     timer = window.setInterval(function () {
       setActive((current + 1) % count);
@@ -104,15 +106,21 @@ function initBenefitTabs() {
     }, autoplayMs());
   }
 
+  function beginInView() {
+    inView = true;
+    current = -1;
+    setActive(0);
+    startAutoplay();
+  }
+
   tabs.forEach(function (tab) {
     tab.addEventListener("click", function () {
+      inView = true;
       setActive(Number(tab.getAttribute("data-tab")));
-      startAutoplay();
+      startAutoplay(true);
     });
   });
 
-  section.addEventListener("mouseenter", stopAutoplay);
-  section.addEventListener("mouseleave", startAutoplay);
   section.addEventListener("focusin", stopAutoplay);
   section.addEventListener("focusout", function (event) {
     if (!section.contains(event.relatedTarget)) startAutoplay();
@@ -124,7 +132,21 @@ function initBenefitTabs() {
   });
 
   setActive(0);
-  startAutoplay();
+
+  if ("IntersectionObserver" in window) {
+    var viewObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) beginInView();
+        else {
+          inView = false;
+          stopAutoplay();
+        }
+      });
+    }, { threshold: 0.35 });
+    viewObserver.observe(section);
+  } else {
+    beginInView();
+  }
 }
 
 function initScrollAudiences() {
@@ -233,10 +255,19 @@ function initScrollAudiences() {
     return aligned + (end - aligned) * tail;
   }
 
+  function professionalOpenShift() {
+    var images = photos.querySelectorAll("[data-audience-photo]");
+    var img = images[0];
+    if (!img) return targets[1] || 0;
+    var remain = window.innerHeight * 0.15;
+    return remain - img.offsetTop - img.offsetHeight;
+  }
+
   function reachedIndex(ty) {
     var index = -1;
     for (var i = 0; i < targets.length; i++) {
-      if (ty <= targets[i] + 1.5) index = i;
+      var mark = i === 1 ? professionalOpenShift() : targets[i];
+      if (ty <= mark + 1.5) index = i;
     }
     return index;
   }
@@ -284,22 +315,24 @@ function initScrollAudiences() {
     pendingIndex = index;
     clearDwell();
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var wait = reduce || index === 0 || index === 1 ? 0 : dwellMs();
     dwellTimer = window.setTimeout(function () {
       dwellTimer = null;
       if (pendingIndex !== index) return;
       setActive(index);
       measureTargets();
       applyTransform(lastProgress);
-    }, reduce ? 0 : dwellMs());
+    }, wait);
   }
 
   function updateFromScroll() {
     if (compact.matches) return;
 
     measureTargets();
+    var block = section.closest("#audiences") || section;
     var rect = section.getBoundingClientRect();
 
-    if (rect.top > pinOffset()) {
+    if (block.getBoundingClientRect().top > window.innerHeight) {
       lastProgress = 0;
       applyTransform(0);
       pendingIndex = -1;
@@ -308,9 +341,17 @@ function initScrollAudiences() {
       return;
     }
 
+    if (rect.top > pinOffset()) {
+      lastProgress = 0;
+      applyTransform(0);
+      queueActive(0);
+      return;
+    }
+
     lastProgress = progress();
     var ty = applyTransform(lastProgress);
-    queueActive(reachedIndex(ty));
+    var index = reachedIndex(ty);
+    queueActive(index < 0 ? 0 : index);
   }
 
   function scrollToIndex(index) {

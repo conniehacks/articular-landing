@@ -54,7 +54,7 @@
   /* DEV: lower = faster partner logo marquee (seconds per loop). */
   --logo-marquee-duration: 48s;
   /* DEV: time each benefits tab stays active before auto-advance. */
-  --benefit-tab-autoplay-duration: 1.5s;
+  --benefit-tab-autoplay-duration: 3s;
   /* DEV: gap between the viewport top and the stuck audiences row. */
   --audiences-sticky-offset: 120px;
   /* DEV: extra scroll track per audiences row (Founder / Professional / Event). */
@@ -187,14 +187,20 @@ ul {
 
 .logo-row__track {
   display: flex;
-  align-items: center;
-  gap: 56px;
   width: max-content;
   margin: 0;
   padding: 0;
-  list-style: none;
   animation: logo-marquee var(--logo-marquee-duration) linear infinite;
   will-change: transform;
+}
+
+.logo-row__set {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  margin: 0;
+  padding: 0 56px 0 0;
+  list-style: none;
 }
 
 .proof,
@@ -355,7 +361,7 @@ ul {
   mix-blend-mode: screen;
 }
 
-.logo-row__track > li {
+.logo-row__set > li {
   flex: none;
   display: flex;
   align-items: center;
@@ -731,7 +737,7 @@ ul {
 
 .benefits {
   position: relative;
-  min-height: 85vh;
+  min-height: 95vh;
   background: var(--bg);
   box-shadow: 0 -40px 100px rgba(0, 0, 0, 0.1);
 }
@@ -747,16 +753,20 @@ ul {
 .benefit-tabs {
   display: flex;
   align-items: center;
-  gap: 38px;
+  justify-content: space-between;
   margin-top: 34px;
 }
 
 .benefit-tab {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  padding: 0;
+  min-height: 82px;
+  padding: 9px 16px;
+  overflow: hidden;
   border: 0;
+  border-radius: 25px;
   background: transparent;
   color: var(--surface-dark);
   font-size: 24px;
@@ -765,10 +775,34 @@ ul {
   cursor: pointer;
 }
 
+.benefit-tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-deep);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.benefits.is-advancing .benefit-tab.is-active::after {
+  animation: benefit-tab-load var(--benefit-tab-autoplay-duration) ease-out forwards;
+}
+
+@keyframes benefit-tab-load {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.benefit-tab:hover,
 .benefit-tab.is-active {
-  min-height: 82px;
-  padding: 9px 16px;
-  border-radius: 25px;
   background: #deddff;
   color: var(--text);
 }
@@ -788,14 +822,9 @@ ul {
   height: 16px;
 }
 
+.benefit-tab:hover .benefit-tab__icon,
 .benefit-tab.is-active .benefit-tab__icon {
-  background: var(--chip);
   border: 1px solid rgba(248, 248, 248, 0.4);
-}
-
-.benefit-tab.is-active .benefit-tab__icon img {
-  width: 24px;
-  height: 24px;
 }
 
 .intent-stack {
@@ -832,33 +861,6 @@ ul {
   padding: 82px 40px 48px;
   overflow: hidden;
   background: #d9d9d9;
-}
-
-.intent__stage::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 2;
-  width: 100%;
-  height: 2px;
-  background: var(--accent-strong);
-  transform: scaleX(0);
-  transform-origin: left center;
-  pointer-events: none;
-}
-
-.benefits.is-advancing .intent.is-active .intent__stage::after {
-  animation: benefit-tab-load var(--benefit-tab-autoplay-duration) ease-out forwards;
-}
-
-@keyframes benefit-tab-load {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
 }
 
 .intent__composer {
@@ -1201,7 +1203,7 @@ ul {
 }
 
 .button--accent {
-  background: var(--accent-button);
+  background: #769093;
   color: var(--bg-dark-deep);
 }
 
@@ -1265,8 +1267,14 @@ ul {
   padding: 16px 0;
   border-top: 1px solid var(--line-faint);
   border-bottom: 1px solid var(--line-faint);
-  color: var(--text-on-dark);
+  color: #f9f9f7;
   font-size: 14px;
+  font-weight: 400;
+}
+
+.site-footer__legal a,
+.site-footer__legal p {
+  font-weight: 400;
 }
 
 .site-footer__legal ul {
@@ -1465,7 +1473,7 @@ ul {
     transition: none;
   }
 
-  .intent__stage::after {
+  .benefit-tab.is-active::after {
     animation: none;
   }
 
@@ -1473,17 +1481,26 @@ ul {
     animation: none;
     width: 100%;
     max-width: 100%;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 24px;
     transform: none;
   }
 
-  .logo-row__track > li:nth-child(n + 7) {
+  .logo-row__set:last-child {
     display: none;
   }
 
-  .logo-row__track > li {
+  .logo-row__set {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    padding-right: 0;
+  }
+
+  .logo-row__set > li:nth-child(n + 7) {
+    display: none;
+  }
+
+  .logo-row__set > li {
     min-width: 0;
     flex: 1 1 120px;
   }

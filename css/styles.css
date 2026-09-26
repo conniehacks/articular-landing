@@ -37,6 +37,10 @@
   --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
   --content: 1280px;
   --nav: 1414px;
+  /* Minimum side inset. The 1280px frame stays centered, so the visible inset grows past this. */
+  --gutter: 16px;
+  /* Shared vertical padding for proof, benefits, FAQ, and the footer top. */
+  --section-pad-y: 96px;
   --radius-card: 34px;
   --intent-composer-radius: 21px;
   --radius-control: 8px;
@@ -51,6 +55,8 @@
   --logo-marquee-duration: 48s;
   /* DEV: time each benefits tab stays active before auto-advance. */
   --benefit-tab-autoplay-duration: 1.5s;
+  /* DEV: gap between the viewport top and the stuck audiences row. */
+  --audiences-sticky-offset: 120px;
   /* DEV: extra scroll track per audiences row (Founder / Professional / Event). */
   --audiences-scroll-step: 70vh;
   /* DEV: extra sticky scroll after the last photo so it can sit fully in view. */
@@ -152,7 +158,7 @@ ul {
 .logo-row {
   position: relative;
   z-index: 1;
-  width: min(var(--content), calc(100% - 80px));
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
   margin: auto auto 0;
   padding: 18px 0 28px;
   overflow: hidden;
@@ -176,60 +182,78 @@ ul {
   position: relative;
 }
 
+.proof,
+.benefits,
+.faq {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .proof {
-  padding: 96px 24px 96px;
+  min-height: 85vh;
+  padding: var(--section-pad-y) 0;
   text-align: center;
   background: var(--bg);
 }
 
 .benefits__sticky {
-  padding: 72px 24px;
+  padding: var(--section-pad-y) 0;
 }
 
 .benefits__inner {
-  width: min(1180px, 100%);
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
   margin: 0 auto;
 }
 
 .audiences {
-  height: calc(100vh + 3 * var(--audiences-scroll-step) + var(--audiences-end-padding));
   box-shadow: var(--shadow-lift);
+}
+
+.audiences__intro {
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
+  margin: 0 auto;
+  padding: 120px 0 var(--audiences-sticky-offset);
+}
+
+.audiences__stage {
+  height: calc(100vh + 3 * var(--audiences-scroll-step) + var(--audiences-end-padding));
 }
 
 .audiences__sticky {
   position: sticky;
-  top: 0;
+  top: var(--audiences-sticky-offset);
   display: flex;
   align-items: stretch;
-  min-height: 100vh;
-  padding: 0 24px;
+  min-height: calc(100vh - var(--audiences-sticky-offset));
+  padding: 0;
 }
 
 .audiences__layout {
   display: grid;
-  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
-  gap: 72px;
-  align-items: center;
-  width: min(var(--content), 100%);
-  min-height: 100vh;
+  grid-template-columns: minmax(260px, 310px) minmax(0, 1fr);
+  gap: 80px;
+  align-items: start;
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
+  min-height: calc(100vh - var(--audiences-sticky-offset));
   margin: 0 auto;
 }
 
 .audiences__copy {
-  align-self: center;
+  align-self: start;
 }
 
 .site-footer {
   background: var(--bg-dark);
   color: var(--text-soft);
-  padding: 96px 24px 40px;
+  padding: var(--section-pad-y) 0 40px;
   box-shadow: var(--shadow-lift);
 }
 
 .site-footer__top,
 .site-footer__brand,
 .site-footer__legal {
-  width: min(1320px, 100%);
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
   margin: 0 auto;
 }
 
@@ -242,7 +266,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: min(var(--nav), calc(100% - 64px));
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
   margin: 16px auto 0;
   padding: 8px 0;
 }
@@ -284,9 +308,11 @@ ul {
 .hero__copy p {
   max-width: 720px;
   margin: 24px auto 0;
-  color: var(--muted-on-dark);
+  color: var(--text-on-dark);
   font-size: clamp(16px, 1.4vw, 24px);
   font-weight: 300;
+  opacity: 0.7;
+  text-shadow: 0 -40px 100px rgba(0, 0, 0, 0.1);
 }
 
 .button--pill {
@@ -317,13 +343,14 @@ ul {
 }
 
 .proof__intro {
-  width: min(980px, 100%);
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
   margin: 0 auto;
 }
 
 .proof__intro h2,
 .benefits__inner h2,
-.audiences__copy h2 {
+.audiences__intro h2,
+.faq__title {
   font-family: var(--font-serif);
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -355,7 +382,7 @@ ul {
 
 .proof__stage {
   position: relative;
-  width: min(1199px, 100%);
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
   margin: 54px auto 0;
   z-index: 1;
 }
@@ -682,6 +709,8 @@ ul {
 }
 
 .benefits {
+  position: relative;
+  min-height: 85vh;
   background: var(--bg);
   box-shadow: 0 -40px 100px rgba(0, 0, 0, 0.1);
 }
@@ -708,7 +737,7 @@ ul {
   padding: 0;
   border: 0;
   background: transparent;
-  color: #000;
+  color: var(--surface-dark);
   font-size: 24px;
   font-weight: 400;
   line-height: normal;
@@ -719,8 +748,8 @@ ul {
   min-height: 82px;
   padding: 9px 16px;
   border-radius: 25px;
-  background: var(--surface-dark);
-  color: var(--text-on-dark);
+  background: #deddff;
+  color: var(--text);
 }
 
 .benefit-tab__icon {
@@ -729,7 +758,7 @@ ul {
   width: 49px;
   height: 49px;
   border-radius: 50%;
-  background: var(--surface-muted);
+  background: var(--chip);
   flex: none;
 }
 
@@ -855,7 +884,7 @@ ul {
   padding: 14px 21px;
   border-radius: 7px;
   background: var(--chip);
-  color: var(--accent-strong);
+  color: var(--text);
   font-size: 19px;
   font-weight: 500;
   line-height: 1;
@@ -896,27 +925,29 @@ ul {
 
 .intent__caption p {
   margin: 0;
-  color: var(--muted-caption);
+  color: var(--accent);
   font-size: 24px;
   line-height: 24px;
 }
 
-.audiences__copy h2 {
-  max-width: 16ch;
-  color: var(--text-strong);
+.audiences__intro h2 {
+  max-width: 876px;
+  color: #000;
   font-size: clamp(40px, 4.2vw, 72px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 
-.audiences__copy > p {
-  max-width: 42ch;
+.audiences__intro > p {
+  max-width: 600px;
   margin-top: 16px;
-  color: var(--muted-dark);
+  color: #57514d;
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 22.4px;
 }
 
 .audience-list {
-  margin-top: 48px;
+  margin-top: 0;
 }
 
 .audience {
@@ -958,18 +989,26 @@ ul {
   margin-top: 0;
   overflow: hidden;
   opacity: 0;
+  transition:
+    max-height 400ms ease-in-out,
+    opacity 400ms ease-in-out,
+    margin-top 400ms ease-in-out;
+}
+
+.audience__panel p {
+  margin: 0;
   color: color-mix(in srgb, var(--text-strong) 65%, transparent);
   font-size: 14px;
   font-weight: 300;
-  line-height: 1.35;
-  transition:
-    max-height var(--toggle-duration) ease,
-    opacity var(--toggle-duration) ease,
-    margin-top var(--toggle-duration) ease;
+  line-height: 1.15;
+}
+
+.audience__panel .button--solid {
+  margin-top: 24px;
 }
 
 .audience.is-active .audience__panel {
-  max-height: 120px;
+  max-height: 240px;
   margin-top: 16px;
   opacity: 1;
 }
@@ -978,21 +1017,20 @@ ul {
   align-self: stretch;
   display: flex;
   min-width: 0;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--audiences-sticky-offset));
 }
 
 .audiences__photos-viewport {
   overflow: hidden;
   width: 100%;
-  height: 100vh;
-  border-radius: 22px;
+  height: calc(100vh - var(--audiences-sticky-offset));
 }
 
 .audiences__photos {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 80px;
   will-change: transform;
 }
 
@@ -1014,10 +1052,104 @@ ul {
 
 .audiences__photos img {
   width: 100%;
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 22px;
-  background: var(--surface-muted);
+  border-radius: 24px;
+  background: #38342c;
+}
+
+.faq {
+  min-height: 60vh;
+  background: var(--bg);
+  box-shadow: 0 -40px 50px rgba(0, 0, 0, 0.1);
+}
+
+.faq__layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
+  margin: 0 auto;
+  padding: var(--section-pad-y) 0;
+}
+
+.faq__title {
+  width: min(524px, 100%);
+  color: var(--text-body);
+  font-size: clamp(40px, 4.2vw, 72px);
+  line-height: 1;
+}
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(664px, 100%);
+}
+
+.faq__item {
+  border: 0.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.faq__item summary {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 33px 25px;
+  list-style: none;
+  cursor: pointer;
+  color: var(--text-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq__item summary > span:first-child {
+  flex: 1;
+}
+
+.faq__item summary:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.faq__item p {
+  margin: 0;
+  padding: 0 25px 33px;
+  color: rgba(20, 20, 19, 0.65);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+.faq__item[open] summary {
+  padding-bottom: 16px;
+}
+
+.faq__toggle {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
+
+.faq__icon--minus,
+.faq__item[open] .faq__icon--plus {
+  display: none;
+}
+
+.faq__item[open] .faq__icon--minus {
+  display: block;
 }
 
 .site-footer__top {
@@ -1029,6 +1161,7 @@ ul {
 .site-footer__cta p {
   width: min(var(--footer-cta-heading-width), 100%);
   max-width: var(--footer-cta-heading-width);
+  color: #bdbbff;
   font-family: var(--font-serif);
   font-size: clamp(28px, 2.4vw, 36px);
   letter-spacing: -0.02em;
@@ -1170,7 +1303,30 @@ ul {
 
 /* =========================================================
    Responsive
+   Content frame stays 1280px and centered.
+   1920: side space is (100vw - 1280px) / 2 = 320px.
+   1440: gutter 80px, so the frame fills 1440 - 160.
+   Tablet (721–1439): gutter 32px, frame shrinks with the viewport.
+   Phone: gutter 16px.
    ========================================================= */
+@media (min-width: 721px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --gutter: 80px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --gutter: 80px;
+  }
+}
+
 @media (max-width: 980px) {
   .benefit-tabs {
     flex-wrap: wrap;
@@ -1181,6 +1337,14 @@ ul {
   .site-footer__top {
     grid-template-columns: 1fr;
     display: grid;
+  }
+
+  .faq__layout {
+    flex-direction: column;
+  }
+
+  .faq__list {
+    width: 100%;
   }
 
   .footer-nav {
@@ -1194,10 +1358,6 @@ ul {
 }
 
 @media (max-width: 720px) {
-  .nav {
-    width: calc(100% - 32px);
-  }
-
   .nav__links {
     display: none;
   }
@@ -1206,22 +1366,24 @@ ul {
     margin-top: 96px;
   }
 
-  .logo-row {
-    width: calc(100% - 32px);
+  .audiences__intro {
+    padding-bottom: 40px;
   }
 
-  .benefits__sticky {
-    padding: 72px 16px;
-  }
-
-  .audiences {
+  .audiences__stage {
     height: auto;
   }
 
   .audiences__sticky {
     position: static;
+    top: auto;
     min-height: 0;
-    padding: 72px 16px 96px;
+    padding: var(--section-pad-y) 0 96px;
+  }
+
+  .audiences__layout,
+  .audiences__media {
+    min-height: 0;
   }
 
   .audiences__photos-viewport {

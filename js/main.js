@@ -143,10 +143,17 @@ function initScrollAudiences() {
   var pendingIndex = -2;
   var dwellTimer = null;
 
+  function pinOffset() {
+    var raw = getComputedStyle(document.documentElement).getPropertyValue("--audiences-sticky-offset").trim() || "120px";
+    if (raw.endsWith("vh")) return window.innerHeight * parseFloat(raw) / 100;
+    if (raw.endsWith("px")) return parseFloat(raw);
+    return 120;
+  }
+
   function progress() {
     var scrollable = section.offsetHeight - window.innerHeight;
     if (scrollable <= 0) return 0;
-    var traveled = Math.min(Math.max(-section.getBoundingClientRect().top, 0), scrollable);
+    var traveled = Math.min(Math.max(pinOffset() - section.getBoundingClientRect().top, 0), scrollable);
     return traveled / scrollable;
   }
 
@@ -262,6 +269,8 @@ function initScrollAudiences() {
         tab.tabIndex = on ? 0 : -1;
       }
       if (panel) panel.setAttribute("aria-hidden", on ? "false" : "true");
+      var action = item.querySelector(".audience__panel .button");
+      if (action) action.tabIndex = on ? 0 : -1;
     });
   }
 
@@ -290,7 +299,7 @@ function initScrollAudiences() {
     measureTargets();
     var rect = section.getBoundingClientRect();
 
-    if (rect.top > 8) {
+    if (rect.top > pinOffset()) {
       lastProgress = 0;
       applyTransform(0);
       pendingIndex = -1;
@@ -317,7 +326,7 @@ function initScrollAudiences() {
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     window.scrollTo({
-      top: sectionTop + alignSpan * band,
+      top: sectionTop - pinOffset() + alignSpan * band,
       behavior: reduce ? "auto" : "smooth"
     });
   }

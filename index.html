@@ -267,53 +267,123 @@
       </div>
     </section>
 
-    <section class="audiences" id="audiences" data-scroll-audiences aria-labelledby="audiences-title">
-      <div class="audiences__sticky">
-        <div class="audiences__layout">
-          <div class="audiences__copy" data-reveal>
-            <h2 id="audiences-title">Everything you need to connect, talk and get result.</h2>
-            <!-- DEV: this subtitle is copied from the Figma frame as-is. -->
-            <p>From drafting to compliance, every step of your legal process is powered by precision, collaboration, and security.</p>
+    <section class="audiences" id="audiences" aria-labelledby="audiences-title">
+      <div class="audiences__intro">
+        <h2 id="audiences-title">Everything you need to connect, talk and get result.</h2>
+        <!-- DEV: this subtitle is copied from the Figma frame as-is. -->
+        <p>From drafting to compliance, every step of your legal process is powered by precision, collaboration, and security.</p>
+      </div>
 
-            <div class="audience-list" role="tablist" aria-label="Audiences">
-              <article class="audience" data-audience="0" role="presentation">
-                <h3>
-                  <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-0" id="audience-tab-0" tabindex="-1">
-                    Founder
-                  </button>
-                </h3>
-                <p class="audience__panel" id="audience-panel-0" role="tabpanel" aria-labelledby="audience-tab-0" aria-hidden="true">It helps you find the right professional connection, understand why the match matters, and start with a warmer first move.</p>
-              </article>
-              <article class="audience" data-audience="1" role="presentation">
-                <h3>
-                  <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-1" id="audience-tab-1" tabindex="-1">
-                    Professional
-                  </button>
-                </h3>
-                <p class="audience__panel" id="audience-panel-1" role="tabpanel" aria-labelledby="audience-tab-1" aria-hidden="true">Build warm paths to founders and peers without cold outreach fatigue.</p>
-              </article>
-              <article class="audience" data-audience="2" role="presentation">
-                <h3>
-                  <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-2" id="audience-tab-2" tabindex="-1">
-                    Event
-                  </button>
-                </h3>
-                <p class="audience__panel" id="audience-panel-2" role="tabpanel" aria-labelledby="audience-tab-2" aria-hidden="true">Turn gatherings into qualified introductions before the room clears.</p>
-              </article>
+      <div class="audiences__stage" data-scroll-audiences>
+        <div class="audiences__sticky">
+          <div class="audiences__layout">
+            <div class="audiences__copy">
+              <div class="audience-list" role="tablist" aria-label="Audiences">
+                <article class="audience" data-audience="0" role="presentation">
+                  <h3>
+                    <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-0" id="audience-tab-0" tabindex="-1">
+                      Founder
+                    </button>
+                  </h3>
+                  <div class="audience__panel" id="audience-panel-0" role="tabpanel" aria-labelledby="audience-tab-0" aria-hidden="true">
+                    <p>It helps you find the right professional connection, understand why the match matters, and start with a warmer first move.</p>
+                    <a class="button button--solid" href="#benefits" tabindex="-1">Learn More</a>
+                  </div>
+                </article>
+                <article class="audience" data-audience="1" role="presentation">
+                  <h3>
+                    <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-1" id="audience-tab-1" tabindex="-1">
+                      Professional
+                    </button>
+                  </h3>
+                  <div class="audience__panel" id="audience-panel-1" role="tabpanel" aria-labelledby="audience-tab-1" aria-hidden="true">
+                    <p>Build warm paths to founders and peers without cold outreach fatigue.</p>
+                    <a class="button button--solid" href="#benefits" tabindex="-1">Learn More</a>
+                  </div>
+                </article>
+                <article class="audience" data-audience="2" role="presentation">
+                  <h3>
+                    <button type="button" class="audience__head" role="tab" aria-selected="false" aria-controls="audience-panel-2" id="audience-tab-2" tabindex="-1">
+                      Event
+                    </button>
+                  </h3>
+                  <div class="audience__panel" id="audience-panel-2" role="tabpanel" aria-labelledby="audience-tab-2" aria-hidden="true">
+                    <p>Turn gatherings into qualified introductions before the room clears.</p>
+                    <a class="button button--solid" href="#benefits" tabindex="-1">Learn More</a>
+                  </div>
+                </article>
+              </div>
             </div>
-            <a class="button button--solid" href="#benefits">Learn More</a>
-          </div>
 
-          <div class="audiences__media">
-            <div class="audiences__photos-viewport" data-audiences-viewport>
-              <div class="audiences__photos" data-audiences-photos>
-                <!-- DEV: swap these three photos if the audience stories change. Order matches data-audience 0–2. -->
-                <img data-audience-photo="0" src="assets/photo-portrait.png" alt="Portrait of a person in conversation">
-                <img data-audience-photo="1" src="assets/photo-networking.png" alt="Two people talking at an evening gathering">
-                <img data-audience-photo="2" src="assets/photo-crowd.png" alt="A group posing together at an event">
+            <div class="audiences__media">
+              <div class="audiences__photos-viewport" data-audiences-viewport>
+                <div class="audiences__photos" data-audiences-photos>
+                  <img data-audience-photo="0" src="assets/audience-founder.png" alt="A founder team working around a desk">
+                  <img data-audience-photo="1" src="assets/audience-professional.png" alt="Three professionals talking across a table">
+                  <img data-audience-photo="2" src="assets/audience-event.png" alt="A crowded exhibition hall with an Articuler booth">
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="faq__layout">
+        <h2 class="faq__title" id="faq-title">Questions before you start?</h2>
+        <div class="faq__list">
+          <details class="faq__item" open>
+            <summary>
+              <span>How does Articuler choose matches?</span>
+              <span class="faq__toggle" aria-hidden="true">
+                <img class="faq__icon faq__icon--minus" src="assets/icon-minus.svg" alt="">
+                <img class="faq__icon faq__icon--plus" src="assets/icon-faq-plus.svg" alt="">
+              </span>
+            </summary>
+            <p>It helps you find the right professional connection, understand why the match matters, and start with a warmer first move.</p>
+          </details>
+          <!-- DEV: the frame only writes an answer for the first question. -->
+          <details class="faq__item">
+            <summary>
+              <span>What sources does Articuler use?</span>
+              <span class="faq__toggle" aria-hidden="true">
+                <img class="faq__icon faq__icon--minus" src="assets/icon-minus.svg" alt="">
+                <img class="faq__icon faq__icon--plus" src="assets/icon-faq-plus.svg" alt="">
+              </span>
+            </summary>
+            <p>Public professional profiles, the context you add, and the room you are about to walk into.</p>
+          </details>
+          <details class="faq__item">
+            <summary>
+              <span>Can I draft outreach from a match?</span>
+              <span class="faq__toggle" aria-hidden="true">
+                <img class="faq__icon faq__icon--minus" src="assets/icon-minus.svg" alt="">
+                <img class="faq__icon faq__icon--plus" src="assets/icon-faq-plus.svg" alt="">
+              </span>
+            </summary>
+            <p>Yes. A match can open into a first note that already explains why the introduction makes sense.</p>
+          </details>
+          <details class="faq__item">
+            <summary>
+              <span>Can I use this before an event?</span>
+              <span class="faq__toggle" aria-hidden="true">
+                <img class="faq__icon faq__icon--minus" src="assets/icon-minus.svg" alt="">
+                <img class="faq__icon faq__icon--plus" src="assets/icon-faq-plus.svg" alt="">
+              </span>
+            </summary>
+            <p>Yes. Review who is worth meeting before the room fills, then walk in with a warmer first move.</p>
+          </details>
+          <details class="faq__item">
+            <summary>
+              <span>What makes a match strong?</span>
+              <span class="faq__toggle" aria-hidden="true">
+                <img class="faq__icon faq__icon--minus" src="assets/icon-minus.svg" alt="">
+                <img class="faq__icon faq__icon--plus" src="assets/icon-faq-plus.svg" alt="">
+              </span>
+            </summary>
+            <p>A strong match fits the goal you named, shows the reason, and gives you a clear way to start.</p>
+          </details>
         </div>
       </div>
     </section>
